@@ -1,18 +1,12 @@
-sudo: false
-
+os: linux
 language: go
 
 go:
-  - '1.10.x'
-
-install:
-  - go get -u github.com/golang/lint/golint
+  - '1.13.x'
 
 script:
-  - test -z "$(go fmt -s -l -w ./... | tee /dev/stderr)"
-  - golint -set_exit_status ./...
-  - go build -v ./...
-  - go test ./... -race -coverprofile=coverage.txt -covermode=atomic
+  - make test
+  - make lint
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
